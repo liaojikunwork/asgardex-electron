@@ -5,8 +5,10 @@ import StakeHomeView from './stake/StakeHomeView'
 import NoContentView from './NoContentView'
 import * as appRoutes from '../routes/app'
 import * as walletRoutes from '../routes/wallet'
+import * as poolRoutes from '../routes/pool'
 import * as swapRoutes from '../routes/swap'
 import * as stakeRoutes from '../routes/stake'
+import PoolView from './pool/PoolView'
 import SwapView from './swap/SwapView'
 import StakeView from './stake/StakeView'
 import WalletView from './wallet/WalletView'
@@ -16,6 +18,9 @@ const ViewRoutes: React.FC<{}> = (): JSX.Element => {
     <Switch>
       <Route path={appRoutes.base.path()} exact>
         <Redirect to={swapRoutes.base.path()} />
+      </Route>
+      <Route path={poolRoutes.base.template} exact>
+        <PoolView />
       </Route>
       <Route path={swapRoutes.base.template} exact>
         <SwapHomeView />

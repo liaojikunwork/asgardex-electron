@@ -4,8 +4,7 @@ import { useObservableState } from 'observable-hooks'
 import { Row, Col, Tabs } from 'antd'
 import { useHistory, useRouteMatch } from 'react-router-dom'
 import * as walletRoutes from '../../routes/wallet'
-import * as swapRoutes from '../../routes/swap'
-import * as stakeRoutes from '../../routes/stake'
+import * as poolRoutes from '../../routes/pool'
 import { HeaderContainer, TabLink } from './Header.style'
 
 import { useThemeContext } from '../../contexts/ThemeContext'
@@ -13,7 +12,6 @@ import { palette, size } from 'styled-theme'
 import HeaderNetStatus from './HeaderNetStatus'
 import { ReactComponent as AsgardexLogo } from '../../assets/svg/logo-asgardex.svg'
 import { ReactComponent as SwapIcon } from '../../assets/svg/icon-swap.svg'
-import { ReactComponent as StakeIcon } from '../../assets/svg/icon-stake.svg'
 import { ReactComponent as WalletIcon } from '../../assets/svg/icon-wallet.svg'
 import { ReactComponent as ThemeIcon } from '../../assets/svg/icon-theme-switch.svg'
 import { ReactComponent as SettingsIcon } from '../../assets/svg/icon-settings.svg'
@@ -21,8 +19,7 @@ import { ReactComponent as LockIcon } from '../../assets/svg/icon-lock.svg'
 import HeaderLang from './HeaderLang'
 
 enum TabKey {
-  SWAP = 'swap',
-  STAKE = 'stake',
+  POOL = 'pool',
   WALLET = 'wallet'
 }
 
@@ -44,21 +41,18 @@ const Header: React.FC<Props> = (_): JSX.Element => {
     toggleTheme()
   }
 
-  const matchSwapRoute = useRouteMatch(swapRoutes.base.path())
-  const matchStakeRoute = useRouteMatch(stakeRoutes.base.path())
+  const matchPoolRoute = useRouteMatch(poolRoutes.base.path())
   const matchWalletRoute = useRouteMatch(walletRoutes.base.path())
 
   const activeKey: TabKey = useMemo(() => {
-    if (matchSwapRoute) {
-      return TabKey.SWAP
-    } else if (matchStakeRoute) {
-      return TabKey.STAKE
+    if (matchPoolRoute) {
+      return TabKey.POOL
     } else if (matchWalletRoute) {
       return TabKey.WALLET
     } else {
-      return TabKey.SWAP
+      return TabKey.POOL
     }
-  }, [matchStakeRoute, matchSwapRoute, matchWalletRoute])
+  }, [matchPoolRoute, matchWalletRoute])
 
   const clickSettingsHandler = useCallback(() => history.push(walletRoutes.settings.path()), [history])
 
@@ -69,8 +63,7 @@ const Header: React.FC<Props> = (_): JSX.Element => {
   const items = useMemo(
     () =>
       [
-        { key: TabKey.SWAP, label: 'Swap', path: swapRoutes.base.path(), icon: SwapIcon },
-        { key: TabKey.STAKE, label: 'Stake', path: stakeRoutes.base.path(), icon: StakeIcon },
+        { key: TabKey.POOL, label: 'Pool', path: poolRoutes.base.path(), icon: SwapIcon },
         { key: TabKey.WALLET, label: 'Wallet', path: walletRoutes.base.path(), icon: WalletIcon }
       ] as Tab[],
     []
